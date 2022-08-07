@@ -23,6 +23,8 @@ fi
 
 mkdir -p assets content resources
 
+mount -t cifs "$smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=1000
+
 ./from_assets_to_content.sh
 
 

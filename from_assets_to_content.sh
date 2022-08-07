@@ -8,7 +8,6 @@ temp_dir="$(mktemp -d)"
 mv ${root_mount_point}/content $temp_dir/
 mkdir ${root_mount_point}/content
 
-mount -t cifs "$smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=1000
 cp ${root_mount_point}/assets/_index.md ${root_mount_point}/content/
 (
     IFS=$'\n'
