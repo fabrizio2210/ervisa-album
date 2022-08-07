@@ -18,7 +18,7 @@ root_mount_point="$( dirname $0 )"
 
 if ! which hugo ; then
   apt-get update
-  apt install hugo
+  apt install -y hugo
 fi
 
 mkdir -p assets content resources
