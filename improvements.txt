@@ -1,0 +1,17 @@
+TODO theme:
++ (must) Have description inside the gallery
++ (must) Have a photo in "About" section
++ (must) Increase gallery title font to 2.8em
++ (must) Remove download button
++ (desirable) Have two empty columns on the borders when large screen (avoid to stretch images above their resolution)
+- (desirable) move all the config to Public Share
+- (desirable) Have "talk about me" in "About" section
+- (desirable) Have a logo in the nav bar
+- (desirable) Move on top the nav bar also for desktop
+- (desirable) add words from Morgane Martini
+
+TODO content:
+- remove lessons photos
+- remove confidential photos
+
+
