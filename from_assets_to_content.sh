@@ -1,6 +1,5 @@
 #!/bin/bash -x
 
-smb_share="//192.168.4.2/Public Share/Sito Ervisa"
 root_mount_point="$( dirname $0 )"
 
 [ ! -d ${root_mount_point}/assets ] && echo "assets directory not found" && exit 1
@@ -9,7 +8,7 @@ temp_dir="$(mktemp -d)"
 mv ${root_mount_point}/content $temp_dir/
 mkdir ${root_mount_point}/content
 
-sudo mount -t cifs "$smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=1000
+mount -t cifs "$smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=1000
 cp ${root_mount_point}/assets/_index.md ${root_mount_point}/content/
 (
     IFS=$'\n'
@@ -81,9 +80,3 @@ EOF
     done
 )
 
-hugo server --bind=0.0.0.0 --baseURL=http://10.9.0.3:1313
-rm -rf "$( dirname $0 )/public/"
-mkdir "$( dirname $0 )/public/"
-hugo -D
-
-sudo umount ${root_mount_point}/assets/
