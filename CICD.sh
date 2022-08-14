@@ -38,6 +38,7 @@ rm -rf "$( dirname $0 )/public/"
 mkdir "$( dirname $0 )/public/"
 ls -l
 hugo -D
+ls -l "$( dirname $0 )/public/"
 
 docker build -t fabrizio2210/ervisa-album:${arch} -f docker/x86_64/Dockerfile-frontend .
 
