@@ -17,8 +17,11 @@ root_mount_point="$( dirname $0 )"
 # Preparation
 
 if ! which hugo ; then
+  TEMP_DEB="$(mktemp)" &&
+  wget -O "$TEMP_DEB" 'https://github.com/gohugoio/hugo/releases/download/v0.101.0/hugo_0.101.0_Linux-ARM.deb'
+  dpkg -i "$TEMP_DEB"
   apt-get update
-  apt install -y hugo cifs-utils
+  apt install -y cifs-utils
 fi
 
 mkdir -p assets content resources
