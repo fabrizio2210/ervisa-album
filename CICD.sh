@@ -33,6 +33,7 @@ mount -t cifs "$smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=100
 
 rm -rf "$( dirname $0 )/public/"
 mkdir "$( dirname $0 )/public/"
+ls -l
 hugo -D
 
 docker build -t fabrizio2210/ervisa-album:${arch} -f docker/x86_64/Dockerfile-frontend .
