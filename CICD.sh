@@ -37,6 +37,7 @@ mount -t cifs "$smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=100
 rm -rf "$( dirname $0 )/public/"
 mkdir "$( dirname $0 )/public/"
 ls -l
+ls -l themes/autophugo
 hugo -D
 ls -l "$( dirname $0 )/public/"
 
