@@ -41,3 +41,11 @@ docker build -t fabrizio2210/ervisa-album:${arch} -f docker/x86_64/Dockerfile-fr
 # Cleaning
 
 umount ${root_mount_point}/assets/
+
+#####
+# Run
+
+if docker inspect ervisa-www ; then
+  docker rm ervisa-www
+fi
+docker run --rm -d --name "ervisa-www" -l traefik.port=80 -l traefik.enable=true -l traefik.http.routers.lightcicdfe.rule:='Host(`ervisa.no-ip.dynu.net`)' -l traefik.http.services.lightcicdfe-service.loadbalancer.server.port=80 --network Traefik_backends fabrizio2210/ervisa-album:${arch} 
