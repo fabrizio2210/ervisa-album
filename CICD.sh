@@ -28,7 +28,7 @@ fi
 mkdir -p assets content resources
 
 mount "$assets_nfs_share" ${root_mount_point}/assets/ -o nolock,soft
-mount "$resources_nfs_share" ${root_mount_point}/resources/ -o nolock,soft,rw
+#mount "$resources_nfs_share" ${root_mount_point}/resources/ -o nolock,soft,rw
 
 ./from_assets_to_content.sh
 
