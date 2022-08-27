@@ -40,6 +40,9 @@ rm -rf "$( dirname $0 )/public/"
 mkdir "$( dirname $0 )/public/"
 ls -l
 ls -l themes/autophugo
+ls -l assets
+ls -l assets/cinema
+ls -l assets/cinema/Eclissi
 hugo -D
 ls -l "$( dirname $0 )/public/"
 
