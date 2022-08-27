@@ -9,6 +9,7 @@ else
   arch="armv7hf"
 fi
 
+assets_smb_share="//192.168.4.2/Public Share/Sito Ervisa"
 assets_nfs_share="192.168.4.2:/mnt/HDD/samba/Sito Ervisa"
 resources_nfs_share="192.168.4.1:/mnt/HDD/docker/hugo/ervisa-album/resources/"
 root_mount_point="$( dirname $0 )"
@@ -19,7 +20,7 @@ root_mount_point="$( dirname $0 )"
 
 if ! which hugo ; then
   apt-get update
-  apt install -y wget nfs-common
+  apt install -y wget nfs-common cifs-utils
   TEMP_DEB="$(mktemp)" &&
   wget -O "$TEMP_DEB" 'https://github.com/gohugoio/hugo/releases/download/v0.101.0/hugo_0.101.0_Linux-ARM.deb'
   dpkg -i "$TEMP_DEB"
@@ -27,8 +28,9 @@ fi
 
 mkdir -p assets content resources
 
-mount "$assets_nfs_share" ${root_mount_point}/assets/ -o nolock,soft
-#mount "$resources_nfs_share" ${root_mount_point}/resources/ -o nolock,soft,rw
+mount -t cifs "$assets_smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=1000
+#mount "$assets_nfs_share" ${root_mount_point}/assets/ -o nolock,soft
+mount "$resources_nfs_share" ${root_mount_point}/resources/ -o nolock,soft,rw
 
 ./from_assets_to_content.sh
 
