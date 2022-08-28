@@ -44,7 +44,7 @@ ls -l
 ls -l themes/autophugo
 ls -l assets
 ls -l assets/cinema
-hugo -D --verbose --verboseLog
+hugo -D --verbose --verboseLog --baseURL http://ervisa.no-ip.dynu.net
 ls -l "$( dirname $0 )/public/"
 
 docker build -t fabrizio2210/ervisa-album:${arch} -f docker/x86_64/Dockerfile-frontend ./public/
