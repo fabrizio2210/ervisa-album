@@ -54,7 +54,6 @@ docker build -t fabrizio2210/ervisa-album:${arch} -f docker/x86_64/Dockerfile-fr
 
 umount ${root_mount_point}/assets/
 umount ${root_mount_point}/resources/
-docker container prune --force
 
 #####
 # Run
@@ -63,3 +62,9 @@ if docker service ps ervisa-www ; then
   docker service rm ervisa-www
 fi
 docker service create --name "ervisa-www" -l traefik.port=80 -l traefik.enable=true -l traefik.http.routers.ervisafe.rule='Host(`ervisa.no-ip.dynu.net`)' -l traefik.http.services.ervisafe-service.loadbalancer.server.port=80 --network Traefik_backends fabrizio2210/ervisa-album:${arch} 
+
+#################
+# Cleaning Docker
+
+docker container prune --force
+docker image prune --force
