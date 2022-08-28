@@ -54,6 +54,7 @@ docker build -t fabrizio2210/ervisa-album:${arch} -f docker/x86_64/Dockerfile-fr
 
 umount ${root_mount_point}/assets/
 umount ${root_mount_point}/resources/
+docker container prune --force
 
 #####
 # Run
