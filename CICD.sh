@@ -14,6 +14,30 @@ assets_nfs_share="192.168.4.2:/mnt/HDD/samba/Sito Ervisa"
 resources_nfs_share="192.168.4.1:/mnt/HDD/docker/hugo/ervisa-album/resources/"
 root_mount_point="$( dirname $0 )"
 
+################
+# Login creation
+
+if [ ! -f ~/.docker/config.json ] ; then 
+  mkdir -p ~/.docker/
+
+  if [ -z "$DOCKER_LOGIN" ] ; then
+	  echo "Docker login not found in the environment, set DOCKER_LOGIN"
+  else
+    cat << EOF > ~/.docker/config.json
+{
+  "experimental": "enabled",
+        "auths": {
+                "https://index.docker.io/v1/": {
+                        "auth": "$DOCKER_LOGIN"
+                }
+        },
+        "HttpHeaders": {
+                "User-Agent": "Docker-Client/17.12.1-ce (linux)"
+        }
+}
+EOF
+  fi
+fi
 
 #############
 # Preparation
@@ -48,6 +72,7 @@ hugo -D --verbose --verboseLog --baseURL http://ervisa.no-ip.dynu.net/
 ls -l "$( dirname $0 )/public/"
 
 docker build -t fabrizio2210/ervisa-album:${arch} -f docker/x86_64/Dockerfile-frontend ./public/
+docker push fabrizio2210/ervisa-album:${arch}
 
 ##########
 # Cleaning
