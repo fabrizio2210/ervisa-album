@@ -61,4 +61,4 @@ umount ${root_mount_point}/resources/
 if docker inspect ervisa-www ; then
   docker rm ervisa-www
 fi
-docker run --rm -d --name "ervisa-www" -l traefik.port=80 -l traefik.enable=true -l traefik.http.routers.lightcicdfe.rule:='Host(`ervisa.no-ip.dynu.net`)' -l traefik.http.services.lightcicdfe-service.loadbalancer.server.port=80 --network Traefik_backends fabrizio2210/ervisa-album:${arch} 
+docker run --rm -d --name "ervisa-www" -l traefik.port=80 -l traefik.enable=true -l traefik.http.routers.ervisafe.rule:='Host(`ervisa.no-ip.dynu.net`)' -l traefik.http.services.ervisafe-service.loadbalancer.server.port=80 --network Traefik_backends fabrizio2210/ervisa-album:${arch} 
