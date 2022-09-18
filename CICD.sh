@@ -56,12 +56,7 @@ mount "$resources_nfs_share" ${root_mount_point}/resources/ -o nolock,soft,rw
 
 rm -rf "$( dirname $0 )/public/"
 mkdir "$( dirname $0 )/public/"
-ls -l
-ls -l themes/autophugo
-ls -l assets
-ls -l assets/cinema
 hugo -D --verbose --verboseLog --baseURL http://ervisa.no-ip.dynu.net/
-ls -l "$( dirname $0 )/public/"
 
 docker build -t fabrizio2210/ervisa-album:${arch} -f docker/x86_64/Dockerfile-frontend ./public/
 docker push fabrizio2210/ervisa-album:${arch}
