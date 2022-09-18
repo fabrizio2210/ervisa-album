@@ -42,14 +42,6 @@ fi
 #############
 # Preparation
 
-if ! which hugo ; then
-  apt-get update
-  apt install -y wget nfs-common cifs-utils
-  TEMP_DEB="$(mktemp)" &&
-  wget -O "$TEMP_DEB" 'https://github.com/gohugoio/hugo/releases/download/v0.101.0/hugo_0.101.0_Linux-ARM.deb'
-  dpkg -i "$TEMP_DEB"
-fi
-
 mkdir -p assets content resources
 
 mount -t cifs "$assets_smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=1000
