@@ -41,7 +41,7 @@ EOF
   fi
 fi
 
-printf '%(%-Mm %-S)T s\n' $(($start_time-$(date +%s)))
+printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 #############
 # Preparation
@@ -50,48 +50,49 @@ mkdir -p assets content resources
 
 mount -t cifs "$assets_smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=1000
 #mount "$assets_nfs_share" ${root_mount_point}/assets/ -o nolock,soft
+printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 mount "$resources_nfs_share" ${root_mount_point}/resources/ -o nolock,soft,rw
-printf '%(%-Mm %-S)T s\n' $(($start_time-$(date +%s)))
+printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 
 ./from_assets_to_content.sh
 
-printf '%(%-Mm %-S)T s\n' $(($start_time-$(date +%s)))
+printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 #######
 # Build
 
 rm -rf "$( dirname $0 )/public/"
 mkdir "$( dirname $0 )/public/"
-printf '%(%-Mm %-S)T s\n' $(($start_time-$(date +%s)))
+printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 hugo -D --verbose --verboseLog --baseURL http://ervisa.no-ip.dynu.net/
-printf '%(%-Mm %-S)T s\n' $(($start_time-$(date +%s)))
+printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 docker build -t fabrizio2210/ervisa-album:${arch} -f docker/x86_64/Dockerfile-frontend ./public/
-printf '%(%-Mm %-S)T s\n' $(($start_time-$(date +%s)))
+printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 docker push fabrizio2210/ervisa-album:${arch}
-printf '%(%-Mm %-S)T s\n' $(($start_time-$(date +%s)))
+printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 ##########
 # Cleaning
 
 umount ${root_mount_point}/assets/
 umount ${root_mount_point}/resources/
-printf '%(%-Mm %-S)T s\n' $(($start_time-$(date +%s)))
+printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 #####
 # Run
 
 if docker service ps ervisa-www ; then
   docker service rm ervisa-www
-  printf '%(%-Mm %-S)T s\n' $(($start_time-$(date +%s)))
+  printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 fi
 docker service create --quiet --name "ervisa-www" -l traefik.port=80 -l traefik.enable=true -l traefik.http.routers.ervisafe.rule='Host(`ervisa.no-ip.dynu.net`)' -l traefik.http.services.ervisafe-service.loadbalancer.server.port=80 --network Traefik_backends fabrizio2210/ervisa-album:${arch} 
-printf '%(%-Mm %-S)T s\n' $(($start_time-$(date +%s)))
+printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 #################
 # Cleaning Docker
 
 docker container prune --force
-printf '%(%-Mm %-S)T s\n' $(($start_time-$(date +%s)))
+printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 docker image prune --force
-printf '%(%-Mm %-S)T s\n' $(($start_time-$(date +%s)))
+printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
