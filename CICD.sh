@@ -45,7 +45,7 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 #############
 # Preparation
 
-mkdir -p assets content
+mkdir -p assets content resources
 
 mount --bind ${PROJECT_REPOSITORY}/hugo/resources/ ./resources
 ls -la ./resources
