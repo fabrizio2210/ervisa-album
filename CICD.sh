@@ -47,7 +47,7 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 mkdir -p assets content
 
-ln -s ${PROJECT_REPOSITORY}/hugo/resources/ ./resources
+mount --bind ${PROJECT_REPOSITORY}/hugo/resources/ ./resources
 ls -la ./resources
 ls -la ./resources/
 mount -t cifs "$assets_smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=1000
@@ -76,6 +76,7 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 # Cleaning
 
 umount ${root_mount_point}/assets/
+umount ${root_mount_point}/resources/
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 #####
