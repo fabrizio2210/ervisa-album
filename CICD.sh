@@ -45,8 +45,9 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 #############
 # Preparation
 
-mkdir -p assets content resources
+mkdir -p assets content
 
+ln -s ${PROJECT_REPOSITORY}/hugo/resources/ ./resources
 mount -t cifs "$assets_smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=1000
 #mount "$assets_nfs_share" ${root_mount_point}/assets/ -o nolock,soft
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
@@ -61,7 +62,7 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 rm -rf "$( dirname $0 )/public/"
 mkdir "$( dirname $0 )/public/"
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
-hugo -D --verbose --verboseLog --resourceDir ${PROJECT_REPOSITORY}/hugo/resources/ --baseURL http://ervisa.no-ip.dynu.net/
+hugo -D --verbose --verboseLog --baseURL http://ervisa.no-ip.dynu.net/
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 docker build -t fabrizio2210/ervisa-album:${arch} -f docker/x86_64/Dockerfile-frontend ./public/
