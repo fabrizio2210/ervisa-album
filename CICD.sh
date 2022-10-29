@@ -49,6 +49,7 @@ mkdir -p assets content
 
 ln -s ${PROJECT_REPOSITORY}/hugo/resources/ ./resources
 ls -la ./resources
+ls -la ./resources/
 mount -t cifs "$assets_smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=1000
 #mount "$assets_nfs_share" ${root_mount_point}/assets/ -o nolock,soft
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
