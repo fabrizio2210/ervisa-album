@@ -11,7 +11,6 @@ fi
 
 assets_smb_share="//192.168.4.2/Public Share/Sito Ervisa"
 assets_nfs_share="192.168.4.2:/mnt/HDD/samba/Sito Ervisa"
-resources_nfs_share="192.168.4.1:/mnt/HDD/docker/hugo/ervisa-album/resources/"
 root_mount_point="$( dirname $0 )"
 
 start_time=$(date +%s)
@@ -51,8 +50,6 @@ mkdir -p assets content resources
 mount -t cifs "$assets_smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=1000
 #mount "$assets_nfs_share" ${root_mount_point}/assets/ -o nolock,soft
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
-mount "$resources_nfs_share" ${root_mount_point}/resources/ -o nolock,soft,rw
-printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 
 ./from_assets_to_content.sh
@@ -64,7 +61,7 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 rm -rf "$( dirname $0 )/public/"
 mkdir "$( dirname $0 )/public/"
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
-hugo -D --verbose --verboseLog --baseURL http://ervisa.no-ip.dynu.net/
+hugo -D --verbose --verboseLog --resourceDir ${PROJECT_REPOSITORY}/hugo/resources/ --baseURL http://ervisa.no-ip.dynu.net/
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 docker build -t fabrizio2210/ervisa-album:${arch} -f docker/x86_64/Dockerfile-frontend ./public/
@@ -76,7 +73,6 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 # Cleaning
 
 umount ${root_mount_point}/assets/
-umount ${root_mount_point}/resources/
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 #####
