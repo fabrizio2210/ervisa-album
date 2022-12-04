@@ -47,7 +47,7 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 mkdir -p assets content resources
 
-mount --bind ${PROJECT_REPOSITORY}/hugo/resources/ ./resources
+ln -s ${PROJECT_REPOSITORY}/hugo/resources/ ./resources
 ls -la ./resources
 ls -la ./resources/
 mount -t cifs "$assets_smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,gid=1000
