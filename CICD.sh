@@ -76,7 +76,6 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 # Cleaning
 
 umount ${root_mount_point}/assets/
-umount ${root_mount_point}/resources/
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 #####
