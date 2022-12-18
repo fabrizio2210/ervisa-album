@@ -64,7 +64,7 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 # Build
 
 rm -rf "${PROJECT_REPOSITORY}/hugo/public/"
-mkdir -p "${PROJECT_REPOSITORY}/public/"
+mkdir -p "${PROJECT_REPOSITORY}/hugo/public/"
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 hugo -D --verbose --verboseLog --baseURL http://ervisa.no-ip.dynu.net/ --destination "${PROJECT_REPOSITORY}/hugo/public"
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
