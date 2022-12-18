@@ -81,7 +81,7 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 VOLUME=$(echo $PROJECTS_VOLUME_STRING | cut -d: -f1)
 INTERNAL_MOUNTPOINT=$(echo $PROJECTS_VOLUME_STRING | cut -d: -f2)
 REAL_MOUNTPOINT=$(docker volume inspect $VOLUME -f "{{ .Mountpoint}}")
-REAL_REPO_MOUNTPOIN=${REAL_MOUNTPOINT}/${PROJECT_REPOSITORY#$INTERNAL_MOUNTPOINT}
+REAL_REPO_MOUNTPOINT=${REAL_MOUNTPOINT}/${PROJECT_REPOSITORY#$INTERNAL_MOUNTPOINT}
 
 if docker service ps ervisa-www ; then
   docker service rm ervisa-www
