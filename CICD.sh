@@ -67,11 +67,6 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 hugo -D --verbose --verboseLog --baseURL http://ervisa.no-ip.dynu.net/
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
-docker build -t fabrizio2210/ervisa-album:${arch} -f docker/x86_64/Dockerfile-frontend ./public/
-printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
-docker push fabrizio2210/ervisa-album:${arch}
-printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
-
 ##########
 # Cleaning
 
@@ -81,11 +76,16 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 #####
 # Run
 
+VOLUME=$(echo $PROJECTS_VOLUME_STRING | cut -d: -f1)
+INTERNAL_MOUNTPOINT=$(echo $PROJECTS_VOLUME_STRING | cut -d: -f2)
+REAL_MOUNTPOINT=$(docker volume inspect $VOLUME -f "{{ .Mountpoint}}")
+REAL_REPO_MOUNTPOIN=${REAL_MOUNTPOINT}/${PROJECT_REPOSITORY#$INTERNAL_MOUNTPOINT}
+
 if docker service ps ervisa-www ; then
   docker service rm ervisa-www
   printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 fi
-docker service create --quiet --name "ervisa-www" -l traefik.port=80 -l traefik.enable=true -l traefik.http.routers.ervisafe.rule='Host(`ervisa.no-ip.dynu.net`)' -l traefik.http.services.ervisafe-service.loadbalancer.server.port=80 --network Traefik_backends fabrizio2210/ervisa-album:${arch} 
+docker service create --quiet --name "ervisa-www" -l traefik.port=80 -l traefik.enable=true -l traefik.http.routers.ervisafe.rule='Host(`ervisa.no-ip.dynu.net`)' -l traefik.http.services.ervisafe-service.loadbalancer.server.port=80 --network Traefik_backends --mount type=bind,src=$REAL_REPO_MOUNTPOINT,dst=/usr/share/nginx/html,readonly nginx
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 #################
