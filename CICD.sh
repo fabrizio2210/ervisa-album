@@ -63,10 +63,10 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 #######
 # Build
 
-rm -rf "${PROJECT_REPOSITORY}/public/"
-mkdir "${PROJECT_REPOSITORY}/public/"
+rm -rf "${PROJECT_REPOSITORY}/hugo/public/"
+mkdir -p "${PROJECT_REPOSITORY}/public/"
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
-hugo -D --verbose --verboseLog --baseURL http://ervisa.no-ip.dynu.net/ --destination "${PROJECT_REPOSITORY}/public"
+hugo -D --verbose --verboseLog --baseURL http://ervisa.no-ip.dynu.net/ --destination "${PROJECT_REPOSITORY}/hugo/public"
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 ##########
@@ -81,7 +81,7 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 VOLUME=$(echo $PROJECTS_VOLUME_STRING | cut -d: -f1)
 INTERNAL_MOUNTPOINT=$(echo $PROJECTS_VOLUME_STRING | cut -d: -f2)
 REAL_MOUNTPOINT=$(docker volume inspect $VOLUME -f "{{ .Mountpoint}}")
-REAL_REPO_MOUNTPOINT=${REAL_MOUNTPOINT}/${PROJECT_REPOSITORY#$INTERNAL_MOUNTPOINT}/public
+REAL_REPO_MOUNTPOINT=${REAL_MOUNTPOINT}/${PROJECT_REPOSITORY#$INTERNAL_MOUNTPOINT}/hugo/public
 
 if docker service ps ervisa-www ; then
   docker service rm ervisa-www
