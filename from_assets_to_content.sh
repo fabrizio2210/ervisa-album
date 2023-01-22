@@ -56,3 +56,4 @@ EOF
     done
 )
 
+exit 0
