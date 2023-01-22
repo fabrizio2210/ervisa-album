@@ -38,22 +38,6 @@ cp ${root_mount_point}/assets/_index.md ${root_mount_point}/content/
         subdescription="$(grep ^subdescription: $metadata | tr -d '"' | sed 's/^ *//g' | cut -d : -f2-)"
         
 
-        ## Convert images
-    #    (
-    #        IFS=$'\n'
-    #        i=1 ; 
-    #        for _file in $(ls --quoting-style=literal -1 assets/${path}/*.jpg | grep -v "assets/${path}/${base_name}[[:digit:]]*.jpg"); do
-    #            _destfile="assets/${path}/${base_name}${i}.jpg"
-    #            if [ ! -f "$_destfile" ]; then
-    #                convert "$_file" -resize 960x960 "$_destfile" ; 
-    #            fi
-    #            if [ "$_file" != "$_destfile" ]; then
-    #                mv "$_file" /tmp/
-    #            fi
-    #            let i=$i+1 ;
-    #        done
-    #    )
-
         hugo new "${path}/_index.md"
 
         index="content/${path}/_index.md"
@@ -65,16 +49,8 @@ description: "${description}"
 subdescription: "${subdescription}"
 date: $(date -Iseconds)
 draft: false
-resources:
+---
 EOF
-    
-       # (
-       #     IFS=$'\n'
-       #     for _image in $(ls --quoting-style=literal -1  "assets/${path}/*.jpg" | cut -d / -f2-); do
-       #         echo "- src: \"${_image}\"" >> $index
-       #     done
-       # )    
-        echo "---" >> $index
     
     done
 )
