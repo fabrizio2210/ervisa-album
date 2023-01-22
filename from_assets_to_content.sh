@@ -51,6 +51,7 @@ date: $(date -Iseconds)
 draft: false
 ---
 EOF
+    [ -f "assets/${path}/body.txt" ] && cat "assets/${path}/body.txt" >> $index
     
     done
 )
