@@ -87,7 +87,7 @@ if docker service ps ervisa-www ; then
   docker service rm ervisa-www
   printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 fi
-docker service create --quiet --name "ervisa-www" -l traefik.port=80 -l traefik.enable=true -l traefik.http.routers.ervisafe.rule='Host(`ervisa.no-ip.dynu.net`)' -l traefik.http.services.ervisafe-service.loadbalancer.server.port=80 --network Traefik_backends --mount type=bind,src=$REAL_REPO_MOUNTPOINT,dst=/usr/share/nginx/html,readonly nginx
+docker service create --quiet --name "ervisa-www" -l traefik.port=80 -l traefik.enable=true -l traefik.http.routers.ervisafe.rule='Host(`ervisa.no-ip.dynu.net`)' -l traefik.http.services.ervisafe-service.loadbalancer.server.port=80 --network traefik_backends --mount type=bind,src=$REAL_REPO_MOUNTPOINT,dst=/usr/share/nginx/html,readonly nginx
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
 #################
