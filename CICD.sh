@@ -9,8 +9,8 @@ else
   arch="armv7hf"
 fi
 
-assets_smb_share="//192.168.4.2/Public Share/Sito Ervisa"
-assets_nfs_share="192.168.4.2:/mnt/HDD/samba/Sito Ervisa"
+assets_smb_share="//192.168.4.2/Public Share/Sito Ervisa Moda"
+assets_nfs_share="192.168.4.2:/mnt/HDD/samba/Sito Ervisa Moda"
 root_mount_point="$( dirname $0 )"
 
 start_time=$(date +%s)
