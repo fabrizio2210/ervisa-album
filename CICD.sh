@@ -9,36 +9,17 @@ else
   arch="armv7hf"
 fi
 
-assets_smb_share="//192.168.4.2/Public Share/Sito Ervisa Moda"
-assets_nfs_share="192.168.4.2:/mnt/HDD/samba/Sito Ervisa Moda"
+_host="192.168.4.2"
+if [ ${LOCATION} = "LONDON" ] ; then
+  _host="192.168.100.2"
+fi
+
+
+assets_smb_share="//${_host}/Public Share/Sito Ervisa Moda"
+assets_nfs_share="${_host}:/mnt/HDD/samba/Sito Ervisa Moda"
 root_mount_point="$( dirname $0 )"
 
 start_time=$(date +%s)
-
-################
-# Login creation
-
-if [ ! -f ~/.docker/config.json ] ; then 
-  mkdir -p ~/.docker/
-
-  if [ -z "$DOCKER_LOGIN" ] ; then
-	  echo "Docker login not found in the environment, set DOCKER_LOGIN"
-  else
-    cat << EOF > ~/.docker/config.json
-{
-  "experimental": "enabled",
-        "auths": {
-                "https://index.docker.io/v1/": {
-                        "auth": "$DOCKER_LOGIN"
-                }
-        },
-        "HttpHeaders": {
-                "User-Agent": "Docker-Client/17.12.1-ce (linux)"
-        }
-}
-EOF
-  fi
-fi
 
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
