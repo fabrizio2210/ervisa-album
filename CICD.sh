@@ -37,6 +37,7 @@ mount -t cifs "$assets_smb_share" ${root_mount_point}/assets/ -o guest,uid=1000,
 #mount "$assets_nfs_share" ${root_mount_point}/assets/ -o nolock,soft
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
+find ./assets -iname ._*jpg -exec rm {} \;
 
 ./from_assets_to_content.sh
 
