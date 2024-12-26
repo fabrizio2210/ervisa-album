@@ -83,6 +83,7 @@ fi
 # FTP UPLOAD
 
 if [ "$UPLOAD" = "YES" ] ; then
+  export STATIC_DIR="${PROJECT_REPOSITORY}/hugo/public/"
   ${root_mount_point}/upload_tophost.sh
 fi
 

@@ -3,7 +3,11 @@ set -xu
 _dstftp="ftp.ervisa-micukaj.com"
 _user="ervisa-micukaj.com"
 
-_staticdir="$(dirname $0)/public/"
+if [ ! -z "$STATIC_DIR" ] ; then
+  _staticdir="$STATIC_DIR"
+else
+  _staticdir="$(dirname $0)/public/"
+fi
 
 
 lftp -c "set ftp:list-options -a;
