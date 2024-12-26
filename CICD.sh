@@ -72,6 +72,20 @@ fi
 docker service create --quiet --name "ervisa-www" -l traefik.port=80 -l traefik.enable=true -l traefik.http.routers.ervisafe.rule='Host(`ervisa.no-ip.dynu.net`)' -l traefik.http.services.ervisafe-service.loadbalancer.server.port=80 --network traefik_backends --mount type=bind,src=$REAL_REPO_MOUNTPOINT,dst=/usr/share/nginx/html,readonly nginx
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 
+###########
+# FTP LOGIN
+
+if [ -z "${FTP_PASSWORD}" ] ; then
+  echo -e "machine ftp.ervisa-micukaj.com\n\tlogin ervisa-micukaj.com\n\tpassword ${FTP_PASSWORD}" > ~/.netrc
+fi
+
+############
+# FTP UPLOAD
+
+if [ "$UPLOAD" = "YES" ] ; then
+  ${root_mount_point}/upload_tophost.sh
+fi
+
 #################
 # Cleaning Docker
 
