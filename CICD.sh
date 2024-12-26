@@ -75,7 +75,7 @@ printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 ###########
 # FTP LOGIN
 
-if [ -z "${FTP_PASSWORD}" ] ; then
+if [ -n "${FTP_PASSWORD}" ] ; then
   echo -e "machine ftp.ervisa-micukaj.com\n\tlogin ervisa-micukaj.com\n\tpassword ${FTP_PASSWORD}" > ~/.netrc
 fi
 
