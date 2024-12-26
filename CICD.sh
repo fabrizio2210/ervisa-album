@@ -93,3 +93,4 @@ docker container prune --force
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
 docker image prune --force
 printf '%(%-Mm %-S)T s\n' $(($(date +%s)-$start_time))
+
