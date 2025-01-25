@@ -36,14 +36,15 @@ function cleanup {
     rm ${PROJECT_REPOSITORY}/hugo/lock
   fi
 }
+trap cleanup EXIT
 
-while [ -f ${PROJECT_REPOSITORY}/hugo/lock ] && [ $(cat ${PROJECT_REPOSITORY}/hugo/lock) != "$(hostname)" ] ; do
+while [ -f ${PROJECT_REPOSITORY}/hugo/lock ] ; do
   sleep 5
-  echo "Waiting for lock acquisition"
+  echo -n "Waiting for lock acquisitioni, it belongs to "
+  cat ${PROJECT_REPOSITORY}/hugo/lock
 done
 
 echo -n "$(hostname)" > ${PROJECT_REPOSITORY}/hugo/lock
-trap cleanup EXIT
 
 ln -s ${PROJECT_REPOSITORY}/hugo/resources/ ./resources
 ls -la ./resources
