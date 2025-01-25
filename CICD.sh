@@ -30,8 +30,8 @@ mkdir -p assets content
 [ -d "${PROJECT_REPOSITORY}/hugo" ] || mkdir ${PROJECT_REPOSITORY}/hugo
 mkdir -p ${PROJECT_REPOSITORY}/hugo/resources
 
-exec 4<>${PROJECT_REPOSITORY}/hugo/lock
-flock -x 4
+exec 9<>${PROJECT_REPOSITORY}/hugo/lock
+flock -x 9
 
 ln -s ${PROJECT_REPOSITORY}/hugo/resources/ ./resources
 ls -la ./resources
