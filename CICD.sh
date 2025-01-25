@@ -30,21 +30,7 @@ mkdir -p assets content
 [ -d "${PROJECT_REPOSITORY}/hugo" ] || mkdir ${PROJECT_REPOSITORY}/hugo
 mkdir -p ${PROJECT_REPOSITORY}/hugo/resources
 
-function cleanup {
-  echo "Removing lock"
-  if [ $(cat ${PROJECT_REPOSITORY}/hugo/lock) == "$(hostname)" ] ; then
-    rm ${PROJECT_REPOSITORY}/hugo/lock
-  fi
-}
-trap cleanup EXIT
-
-while [ -f ${PROJECT_REPOSITORY}/hugo/lock ] ; do
-  sleep 5
-  echo -n "Waiting for lock acquisitioni, it belongs to "
-  cat ${PROJECT_REPOSITORY}/hugo/lock
-done
-
-echo -n "$(hostname)" > ${PROJECT_REPOSITORY}/hugo/lock
+flock -x ${PROJECT_REPOSITORY}/hugo/lock
 
 ln -s ${PROJECT_REPOSITORY}/hugo/resources/ ./resources
 ls -la ./resources
