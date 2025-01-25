@@ -43,7 +43,7 @@ while [ -f ${PROJECT_REPOSITORY}/hugo/lock ] && [ $(cat ${PROJECT_REPOSITORY}/hu
 done
 
 echo -n "$(hostname)" > ${PROJECT_REPOSITORY}/hugo/lock
-
+trap cleanup EXIT
 
 ln -s ${PROJECT_REPOSITORY}/hugo/resources/ ./resources
 ls -la ./resources
